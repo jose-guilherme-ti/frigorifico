@@ -24,14 +24,20 @@
 
         <!-- FORMS E CTA -->
         <div class="padding-40">
-          <ion-item class="bg-transparent no-padding mg-top-30">
-            <ion-label stacked class="snow bold">E-mail</ion-label>
-            <ion-input type="email" class="snow" [(ngModel)]="loginForm.email"></ion-input>
+          <ion-item class="bg-transparent no-padding mg-top-30 rounded">
+            <!--<ion-label stacked class="dark bold">E-mail</ion-label>
+            <ion-input type="email" class="purple" [(ngModel)]="loginForm.email"></ion-input>-->
+            <mat-form-field class="example-full-width">
+                <input type="email" class=" bold" matInput placeholder="E-mail" [(ngModel)]="loginForm.email">
+            </mat-form-field>
           </ion-item>
 
-          <ion-item class="bg-transparent no-padding mg-top-20">
-            <ion-label stacked class="snow bold">Senha</ion-label>
-            <ion-input type="password" class="snow" [(ngModel)]="loginForm.password"></ion-input>
+          <ion-item class="bg-transparent no-padding mg-top-20 rounded">
+            <!--<ion-label stacked class="dark bold">Senha</ion-label>
+            <ion-input type="password" class="purple" [(ngModel)]="loginForm.password"></ion-input>-->
+            <mat-form-field class="example-full-width">
+                <input type="password" class="bold" matInput placeholder="Senha" [(ngModel)]="loginForm.password">
+            </mat-form-field>
           </ion-item>
 
           <div class="ctaLogin center bold mg-top-30" (click)="fazerLogin()">
@@ -42,6 +48,7 @@
           <div class="txtRegistrar bold mg-top-20 center" (click)="exibirRegistrar()">
             Quero criar uma nova conta
           </div>
+        
         </div>
       </div>
     </div>
@@ -72,19 +79,28 @@
 
         <!-- FORMS E CTA -->
         <div class="padding-40">
-          <ion-item class="bg-transparent no-padding mg-top-30">
-            <ion-label stacked class="snow bold">Como você se chama?</ion-label>
-            <ion-input type="text" class="snow" [(ngModel)]="registerForm.name"></ion-input>
+          <ion-item class="bg-transparent no-padding mg-top-30 rounded">
+            <!--<ion-label stacked class="snow bold">Como você se chama?</ion-label>
+            <ion-input type="text" class="snow" [(ngModel)]="registerForm.name"></ion-input>-->
+            <mat-form-field >
+                <input type="text" class="purple bold" matInput placeholder="Como você se chama?" [(ngModel)]="registerForm.name">
+            </mat-form-field>
           </ion-item>
 
-          <ion-item class="bg-transparent no-padding mg-top-20">
-            <ion-label stacked class="snow bold">Qual é o seu e-mail?</ion-label>
-            <ion-input type="email" class="snow" [(ngModel)]="registerForm.email"></ion-input>
+          <ion-item class="bg-transparent no-padding mg-top-20 rounded">
+            <!--<ion-label stacked class="snow bold">Qual é o seu e-mail?</ion-label>
+            <ion-input type="email" class="snow" [(ngModel)]="registerForm.email"></ion-input>-->
+            <mat-form-field class="example-full-width">
+                <input type="email" class="purple bold" matInput placeholder="Qual é o seu e-mail?" [(ngModel)]="registerForm.email">
+            </mat-form-field>
           </ion-item>
 
-          <ion-item class="bg-transparent no-padding mg-top-20">
-            <ion-label stacked class="snow bold">Escolha uma super senha :p</ion-label>
-            <ion-input type="password" class="snow" [(ngModel)]="registerForm.password"></ion-input>
+          <ion-item class="bg-transparent no-padding mg-top-20 rounded">
+           <!-- <ion-label stacked class="snow bold">Escolha uma super senha :p</ion-label>
+            <ion-input type="password" class="snow" [(ngModel)]="registerForm.password"></ion-input>-->
+            <mat-form-field class="example-full-width">
+                <input type="password" class="purple bold" matInput placeholder="Escolha uma super senha:" [(ngModel)]="registerForm.password">
+            </mat-form-field>
           </ion-item>
 
           <div class="ctaRegister center bold mg-top-30" (click)="criarNovaConta()">
