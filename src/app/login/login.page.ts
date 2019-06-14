@@ -3,7 +3,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { NavController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../service/auth/auth.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
@@ -53,24 +53,25 @@ export class LoginPage implements OnInit {
     email: '',
     password: ''
   };
-  registerForm = {
+  registroForm = {
     email: '',
-    password: '',
-    name: ''
+    senha: '',
+    nome: ''
   }
 
 
-  constructor(  
+  constructor(
     public navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private storage: Storage,
-    private authservice:AuthService
-    ) { }
+    private authservice: AuthService,
+    private router:Router
+  ) { }
 
   ngOnInit() {
   }
 
-  
+
   //Exibir form de registro
   exibirRegistrar() {
     this.login = false;
@@ -83,37 +84,27 @@ export class LoginPage implements OnInit {
     this.register = false;
   }
   //Registro
-  /*criarNovaConta() {
+  criarNovaConta() {
     //let load = this.loadingCtrl.create();
     //load.present();
 
-    this.authservice.registrar(this.registerForm)
+    this.authservice.registrar(this.registroForm)
       .then((res) => {
-        let uid = res.user.uid;
-
         //Organizar dados
         let data = {
-          uid: uid,
-          name: this.registerForm.name,
-          email: this.registerForm.email
+          nome: this.registroForm.nome,
+          email: this.registroForm.email
         };
-
-        //Gravar user no firestore
-        this.firebaseProvider.postUser(data)
+        this.storage.set('usuario', data)
           .then(() => {
-            this.storage.set('usuario', data)
-              .then(() => {
-                //load.dismiss();
-                this.navCtrl.setRoot('HomePage');
-              })
-          })
-          .catch((err) => {
             //load.dismiss();
+            this.router.navigate(['HomePage'])
           })
       })
       .catch((err) => {
         //load.dismiss();
       })
-  }*/
+
+  }
 
 }

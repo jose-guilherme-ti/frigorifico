@@ -82,8 +82,8 @@
           <ion-item class="bg-transparent no-padding mg-top-30 rounded">
             <!--<ion-label stacked class="snow bold">Como você se chama?</ion-label>
             <ion-input type="text" class="snow" [(ngModel)]="registerForm.name"></ion-input>-->
-            <mat-form-field >
-                <input type="text" class="purple bold" matInput placeholder="Como você se chama?" [(ngModel)]="registerForm.name">
+            <mat-form-field class="example-full-width">
+                <input type="text" class=" bold" matInput placeholder="Como você se chama?" [(ngModel)]="registroForm.nome">
             </mat-form-field>
           </ion-item>
 
@@ -91,7 +91,7 @@
             <!--<ion-label stacked class="snow bold">Qual é o seu e-mail?</ion-label>
             <ion-input type="email" class="snow" [(ngModel)]="registerForm.email"></ion-input>-->
             <mat-form-field class="example-full-width">
-                <input type="email" class="purple bold" matInput placeholder="Qual é o seu e-mail?" [(ngModel)]="registerForm.email">
+                <input type="email" class="bold" matInput placeholder="Qual é o seu e-mail?" [(ngModel)]="registroForm.email">
             </mat-form-field>
           </ion-item>
 
@@ -99,7 +99,7 @@
            <!-- <ion-label stacked class="snow bold">Escolha uma super senha :p</ion-label>
             <ion-input type="password" class="snow" [(ngModel)]="registerForm.password"></ion-input>-->
             <mat-form-field class="example-full-width">
-                <input type="password" class="purple bold" matInput placeholder="Escolha uma super senha:" [(ngModel)]="registerForm.password">
+                <input type="password" class="bold" matInput placeholder="Escolha uma super senha:" [(ngModel)]="registroForm.senha">
             </mat-form-field>
           </ion-item>
 
