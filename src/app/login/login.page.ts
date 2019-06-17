@@ -94,8 +94,7 @@ export class LoginPage implements OnInit {
 
   //Login
   fazerLogin() {
-    this.loadingCtrl.create()
-      .then(load => load.present);
+    
     let data;
     this.conexao.loginLocal(this.loginForm)
       .then((res :any[]) => {
@@ -108,7 +107,7 @@ export class LoginPage implements OnInit {
         })
         this.storage.set('usuario', data)
           .then(() => {
-            presentLoading();
+           // presentLoading();
             this.router.navigate(['HomePage'])
           })
 
@@ -130,7 +129,7 @@ export class LoginPage implements OnInit {
         };
         this.storage.set('usuario', data)
           .then(() => {
-          
+            //presentLoading();
             this.router.navigate(['HomePage'])
           })
       })

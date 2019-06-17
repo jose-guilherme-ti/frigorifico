@@ -47,6 +47,7 @@ export class BancoService {
 
     db.sqlBatch([
       ['CREATE TABLE IF NOT EXISTS usuario (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, email TEXT, senha TEXT)']
+      ['CREATE TABLE IF NOT EXISTS produto (id integer primary key AUTOINCREMENT NOT NULL, peso_inicial TEXT, quantidade integer, tipo_corte TEXT, valor TEXT, cliente TEXT, rota TEXT)']
     ])
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));

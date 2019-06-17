@@ -75,6 +75,49 @@ export class ConexaoService {
       .catch((e) => console.error(e));
   }
 
+
+  public cadastrarProdutoBD(produto: Produto) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'insert into produto ( peso_inicial, quantidade, tipo_corte, valor, cliente, rota) values (?, ?, ?, ?, ?, ?)';
+        let data = [ produto.peso_inicial, produto.quantidade, produto.tipo_corte, produto.valor, produto.cliente, produto.rota];
+        console.log("Dados do banco de dados ",data);
+        return db.executeSql(sql, data)
+          .catch((e) => console.log(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public get(id: number) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'select * from products where id = ?';
+        let data = [id];
+
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              let item = data.rows.item(0);
+              let producto = new Produto();
+              producto.id           = item.id;
+              producto.peso_inicial = item.peso_inicial;
+              producto.quantidade   = item.quantidade;
+              producto.tipo_corte   = item.tipo_corte;
+              producto.valor        = item.valor;
+              producto.cliente      = item.clietne;
+              producto.rota         = item.rota;
+
+              return producto;
+            }
+
+            return null;
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+
 }
 export class Usuario {
   id: number;
@@ -88,3 +131,13 @@ export class Login {
   email: string;
 }
 
+export class Produto {
+  id:number;
+  peso_inicial: string;
+  quantidade: number;
+  tipo_corte:string;
+  valor:string;
+  cliente:string;
+  rota:string;
+}
+ 

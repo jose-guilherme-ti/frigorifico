@@ -1,12 +1,15 @@
 import { ConexaoService } from './../conexao/conexao.service';
 import { Injectable } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private conexao: ConexaoService) { }
+  constructor(
+    private conexao: ConexaoService,
+    public storage: Storage) { }
+    
 
 
   registrar(dado): Promise<boolean> {
@@ -21,6 +24,11 @@ export class AuthService {
       })
 
     })
+  }
+
+  logout(){
+    this.storage.remove('usuario');
+   
   }
  
 }
