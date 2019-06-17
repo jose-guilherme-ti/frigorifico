@@ -102,7 +102,8 @@ export class LoginPage implements OnInit {
         res.forEach((d) =>{
           data = {
             nome: d.nome,
-            email: d.email
+            email: d.email,
+            id_usuario: d.id
           };
         })
         this.storage.set('usuario', data)
@@ -123,7 +124,7 @@ export class LoginPage implements OnInit {
     this.authservice.registrar(this.registroForm)
       .then((res) => {
         //Organizar dados
-        let data = {
+        /*let data = {
           nome: this.registroForm.nome,
           email: this.registroForm.email
         };
@@ -131,7 +132,8 @@ export class LoginPage implements OnInit {
           .then(() => {
             //presentLoading();
             this.router.navigate(['HomePage'])
-          })
+          })*/
+          this.exibirLogin(); 
       })
       .catch((err) => {
       })

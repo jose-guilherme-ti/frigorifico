@@ -66,7 +66,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -77,6 +77,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import { SQLite } from '@ionic-native/sqlite/ngx'
 import { Network } from  '@ionic-native/network/ngx';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -85,6 +87,7 @@ import { Network } from  '@ionic-native/network/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
+     
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -96,7 +99,7 @@ import { Network } from  '@ionic-native/network/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
-    Network
+    Network,
   ],
   bootstrap: [AppComponent]
 })

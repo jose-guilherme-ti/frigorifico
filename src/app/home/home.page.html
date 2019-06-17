@@ -14,24 +14,26 @@
 
     <ion-list>
 
-      <ion-item-sliding id="item100">
+      <ion-item-sliding id="listaProdutos" *ngFor="let produto of produtos">
         <ion-item>
           <ion-label>
-            <h2>HubStruck Notifications</h2>
-            <p>A new message in your network</p>
-            <p>Oceanic Next has joined your network</p>
+            <h4>Cliente: {{ produto.cliente }}</h4>
+            <h4>Tipo de Corte: {{ produto.tipo_corte }}</h4>
+            <h4>Quantidade: {{ produto.quantidade }}</h4>
+            <h4>Rota: {{ produto.rota }}</h4>
+           
           </ion-label>
           <ion-note slot="end">
-            10:45 AM
+            <h6>R$: {{ produto.valor}}</h6>
           </ion-note>
         </ion-item>
 
         <ion-item-options side="start">
           <ion-item-option color="danger">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
+            <ion-icon slot="icon-only" name="trash" (click)="removeProdutoAlerta(produto)"></ion-icon>
           </ion-item-option>
           <ion-item-option>
-            <ion-icon slot="icon-only" name="create"></ion-icon>
+            <ion-icon slot="icon-only" name="create" (click)="editarProduto(produto.id)"></ion-icon>
           </ion-item-option>
         </ion-item-options>
 

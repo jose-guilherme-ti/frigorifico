@@ -1,9 +1,9 @@
 import { ConexaoService, Produto } from './../service/conexao/conexao.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth/auth.service';
-import { Router } from '@angular/router';
-import { NavParams, ToastController } from '@ionic/angular';
-
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-produto',
@@ -12,23 +12,42 @@ import { NavParams, ToastController } from '@ionic/angular';
 })
 export class ProdutoPage implements OnInit {
   model: Produto;
+  id_produto: number;
   constructor(
 
     private authservice: AuthService,
     private router: Router,
     private conexao: ConexaoService,
-    private navParams: NavParams,
     private toast: ToastController,
+    public storage: Storage,
+    public route: ActivatedRoute
   ) {
     this.model = new Produto();
 
-    if (this.navParams.data.id) {
+    /*if (this.navParams.data.id) {
       this.conexao.get(this.navParams.data.id)
         .then((result: any) => {
           this.model = result;
         })
-    }
+    }*/
+    this.storage.get('usuario')
+    .then((r) => {
+      this.model.usuario_id =  r.id_usuario;
+      console.log("Usuario id= ", this.model.usuario_id);
+    });  
 
+  
+    this.route.params.subscribe(params => {
+      this.id_produto = params['id']; 
+      if (this.id_produto) {
+        console.log("Id do produto a editar: ", this.id_produto );
+        this.conexao.get(this.id_produto)
+          .then((result: any) => {
+            this.model = result;
+            console.log("Retorno dos dados: ", this.model);
+          })
+      }
+    });
   }
 
   ngOnInit() {
@@ -47,11 +66,13 @@ export class ProdutoPage implements OnInit {
 
   private acoesProduto() {
     if (this.model.id) {
-      //return this.productProvider.update(this.model);
-    } else {
+      console.log("Produto vai ser atualizado");
+      return this.conexao.atualizarProdutoBD(this.model);
+    } else { 
       return this.conexao.cadastrarProdutoBD(this.model)
 
     }
   }
+  
 
 }

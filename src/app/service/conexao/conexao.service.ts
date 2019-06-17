@@ -79,19 +79,44 @@ export class ConexaoService {
   public cadastrarProdutoBD(produto: Produto) {
     return this.BancoService.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'insert into produto ( peso_inicial, quantidade, tipo_corte, valor, cliente, rota) values (?, ?, ?, ?, ?, ?)';
-        let data = [ produto.peso_inicial, produto.quantidade, produto.tipo_corte, produto.valor, produto.cliente, produto.rota];
-        console.log("Dados do banco de dados ",data);
+        let sql = 'insert into produto ( peso_inicial, quantidade, tipo_corte, valor, cliente, rota, enviados, usuario_id) values (?, ?, ?, ?, ?, ?, ?, ?)';
+        let data = [ produto.peso_inicial, produto.quantidade, produto.tipo_corte, produto.valor, produto.cliente, produto.rota, 0 , produto.usuario_id];
         return db.executeSql(sql, data)
           .catch((e) => console.log(e));
       })
       .catch((e) => console.error(e));
   }
 
+
+  public atualizarProdutoBD(produto: Produto) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'update produto set peso_inicial = ?, quantidade = ?, tipo_corte = ?, valor = ?, cliente = ?, rota = ? where id = ?';
+        let data = [ produto.peso_inicial, produto.quantidade, produto.tipo_corte, produto.valor, produto.cliente, produto.rota, produto.id];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public removeProdutoBD(id: number) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'delete from produto where id = ?';
+        let data = [id];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+
   public get(id: number) {
     return this.BancoService.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'select * from products where id = ?';
+        let sql = 'select * from produto where id = ?';
         let data = [id];
 
         return db.executeSql(sql, data)
@@ -104,7 +129,7 @@ export class ConexaoService {
               producto.quantidade   = item.quantidade;
               producto.tipo_corte   = item.tipo_corte;
               producto.valor        = item.valor;
-              producto.cliente      = item.clietne;
+              producto.cliente      = item.cliente;
               producto.rota         = item.rota;
 
               return producto;
@@ -116,9 +141,38 @@ export class ConexaoService {
       })
       .catch((e) => console.error(e));
   }
-
-
+  public getAll(id_usuario: string, cliente: string = null, enviar: boolean = null) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'SELECT p.* FROM produto p WHERE p.enviados = ? and p.usuario_id = ?';
+        var data: any[] = [enviar ? 1 : 0];
+        data.push(id_usuario);
+        // filtrando pelo nome
+        if (cliente) {
+          sql += ' and p.cliente like ?'
+          data.push('%' + cliente + '%');
+        }
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            console.log(data)
+            if (data.rows.length > 0) {
+              let produtos: any[] = [];
+              for (var i = 0; i < data.rows.length; i++) {
+                var product = data.rows.item(i);
+                produtos.push(product);
+              }
+              return produtos;
+            } else {
+              return [];
+            }
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
 }
+
+
 export class Usuario {
   id: number;
   nome: string;
@@ -139,5 +193,6 @@ export class Produto {
   valor:string;
   cliente:string;
   rota:string;
+  usuario_id:number;
 }
  

@@ -43,11 +43,15 @@ export class BancoService {
   private createTables(db: SQLiteObject) {
     // Criando as tabelas
 
-    //['DROP TABLE usuario']
-
+    
     db.sqlBatch([
-      ['CREATE TABLE IF NOT EXISTS usuario (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, email TEXT, senha TEXT)']
-      ['CREATE TABLE IF NOT EXISTS produto (id integer primary key AUTOINCREMENT NOT NULL, peso_inicial TEXT, quantidade integer, tipo_corte TEXT, valor TEXT, cliente TEXT, rota TEXT)']
+
+
+      //['DROP TABLE usuario']
+      //['DROP TABLE produto'],
+
+      ['CREATE TABLE IF NOT EXISTS usuario (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, email TEXT, senha TEXT)'],
+      ['CREATE TABLE IF NOT EXISTS produto (id integer primary key AUTOINCREMENT NOT NULL, peso_inicial TEXT, quantidade integer, tipo_corte TEXT, valor TEXT, cliente TEXT, rota TEXT, enviados integer, usuario_id integer)']
     ])
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));
