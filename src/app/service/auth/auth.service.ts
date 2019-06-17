@@ -10,16 +10,17 @@ export class AuthService {
 
 
   registrar(dado): Promise<boolean> {
-    
-      return new Promise((resolve, reject) => {
-        this.conexao.registroBd(dado).then(res => {
-          console.log("Dados Cadastrado: ", res);
-          resolve(true);
-        }).catch(err => {
-          console.log("Erro dados não cadastrado: ", err);
-          reject(false);
-        })
 
+    return new Promise((resolve, reject) => {
+      this.conexao.registroBd(dado).then(res => {
+        console.log("Dados Cadastrado: ", res);
+        resolve(true);
+      }).catch(err => {
+        console.log("Erro dados não cadastrado: ", err);
+        reject(false);
       })
+
+    })
   }
+ 
 }

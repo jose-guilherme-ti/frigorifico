@@ -43,15 +43,37 @@ export class ConexaoService {
   public registroBd(usuario: Usuario) {
     return this.BancoService.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'insert into usuario (id, nome, email, senha) values (?, ?, ?, ?)';
-        let data = [usuario.id, usuario.nome, usuario.email, Md5.hashStr(usuario.senha)];
+        let sql = 'insert into usuario ( nome, email, senha) values (?, ?, ?)';
+        let data = [ usuario.nome, usuario.email, Md5.hashStr(usuario.senha)];
+        //let data = [usuario.id, usuario.nome, usuario.email, usuario.senha];
         console.log("Dados do banco de dados ",data);
         return db.executeSql(sql, data)
           .catch((e) => console.log(e));
       })
       .catch((e) => console.error(e));
   }
-  
+  public loginLocal(usuario: Login) {
+    return this.BancoService.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'SELECT * FROM usuario WHERE email = ? and senha = ?';
+        let data = [usuario.email, Md5.hashStr(usuario.senha)];
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              let usuarioEncontrado: any[] = [];
+              for (var i = 0; i < data.rows.length; i++) {
+                var usuario = data.rows.item(i);
+                usuarioEncontrado.push(usuario);
+              }
+              return usuarioEncontrado;
+            } else {
+              return null;
+            }
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
 
 }
 export class Usuario {
@@ -60,3 +82,9 @@ export class Usuario {
   senha: string;
   email: string;
 }
+
+export class Login {
+  senha: string;
+  email: string;
+}
+

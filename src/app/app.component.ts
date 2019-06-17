@@ -63,7 +63,7 @@ export class AppComponent {
   }
  private openHomePage(splashScreen: SplashScreen) {
     splashScreen.hide();
-    this.storage.get('codigo')
+    this.storage.get('usuario')
       .then((user) => {
         if (user) {
          

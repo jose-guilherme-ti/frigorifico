@@ -3,6 +3,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { NavController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../service/auth/auth.service';
+import { ConexaoService, Login } from '../service/conexao/conexao.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -49,10 +50,14 @@ export class LoginPage implements OnInit {
 
   login = true;
   register = false;
-  loginForm = {
+  loginForm : Login = {
     email: '',
-    password: ''
+    senha: ''
   };
+
+  
+
+
   registroForm = {
     email: '',
     senha: '',
@@ -65,7 +70,8 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     private storage: Storage,
     private authservice: AuthService,
-    private router:Router
+    private conexao:ConexaoService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -83,11 +89,38 @@ export class LoginPage implements OnInit {
     this.login = true;
     this.register = false;
   }
+
+
+
+  //Login
+  fazerLogin() {
+    this.loadingCtrl.create()
+      .then(load => load.present);
+    let data;
+    this.conexao.loginLocal(this.loginForm)
+      .then((res :any[]) => {
+        console.log('Usuario logado: ', res);
+        res.forEach((d) =>{
+          data = {
+            nome: d.nome,
+            email: d.email
+          };
+        })
+        this.storage.set('usuario', data)
+          .then(() => {
+            presentLoading();
+            this.router.navigate(['HomePage'])
+          })
+
+      })
+      .catch((err) => {
+       
+      })
+  }
+
   //Registro
   criarNovaConta() {
-    //let load = this.loadingCtrl.create();
-    //load.present();
-
+   
     this.authservice.registrar(this.registroForm)
       .then((res) => {
         //Organizar dados
@@ -97,14 +130,25 @@ export class LoginPage implements OnInit {
         };
         this.storage.set('usuario', data)
           .then(() => {
-            //load.dismiss();
+          
             this.router.navigate(['HomePage'])
           })
       })
       .catch((err) => {
-        //load.dismiss();
       })
 
   }
+  
 
+}
+async function presentLoading() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loadingElement = await loadingController.create({
+    message: 'Carregando por favor aguarde...',
+    spinner: 'crescent',
+    duration: 3000
+  });
+  return await loadingElement.present();
 }

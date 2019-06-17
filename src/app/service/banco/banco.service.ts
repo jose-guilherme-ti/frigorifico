@@ -43,7 +43,7 @@ export class BancoService {
   private createTables(db: SQLiteObject) {
     // Criando as tabelas
 
-    ['DROP TABLE usuario']
+    //['DROP TABLE usuario']
 
     db.sqlBatch([
       ['CREATE TABLE IF NOT EXISTS usuario (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, email TEXT, senha TEXT)']
