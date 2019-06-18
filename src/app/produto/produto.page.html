@@ -8,7 +8,10 @@
           </div>
           <div padding>
             <ion-item>
-              <ion-input  name="name" type="text" placeholder="Peso Inicial" [(ngModel)]="model.peso_inicial" required></ion-input>
+              <ion-input  name="peso_inicial" type="text" placeholder="Peso Inicial" [(ngModel)]="model.peso_inicial" required></ion-input>
+            </ion-item>
+            <ion-item *ngIf="produto_peso_final">
+              <ion-input  name="peso_final" type="text" placeholder="Peso Final" [(ngModel)]="model.peso_final" required></ion-input>
             </ion-item>
             <ion-item>
               <ion-input name="quantidade" type="text" placeholder="Quantidade" [(ngModel)]="model.quantidade" required></ion-input>
@@ -27,7 +30,7 @@
             </ion-item>
           </div>
           <div padding>
-            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">Registrar</ion-button>
+            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">{{ botao }}</ion-button>
           </div>
         </ion-col>
       </ion-row>

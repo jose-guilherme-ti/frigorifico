@@ -13,6 +13,8 @@ import { Storage } from '@ionic/storage';
 export class ProdutoPage implements OnInit {
   model: Produto;
   id_produto: number;
+  botao: string = "Registrar";
+  produto_peso_final = false;
   constructor(
 
     private authservice: AuthService,
@@ -44,7 +46,9 @@ export class ProdutoPage implements OnInit {
         this.conexao.get(this.id_produto)
           .then((result: any) => {
             this.model = result;
-            console.log("Retorno dos dados: ", this.model);
+            //console.log("Retorno dos dados: ", this.model);
+            this.botao = "Atualizar";
+            this.produto_peso_final = true;
           })
       }
     });
@@ -57,6 +61,7 @@ export class ProdutoPage implements OnInit {
     this.acoesProduto().then(() => {
       this.toast.create({ message: 'Produto salvo com sucesso!!', duration: 3000 }).then(res => res.present());
       this.router.navigate(['HomePage']);
+      
     })
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar o Produto!!', duration: 3000 }).then(res => res.present());

@@ -51,7 +51,7 @@ export class BancoService {
       //['DROP TABLE produto'],
 
       ['CREATE TABLE IF NOT EXISTS usuario (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, email TEXT, senha TEXT)'],
-      ['CREATE TABLE IF NOT EXISTS produto (id integer primary key AUTOINCREMENT NOT NULL, peso_inicial TEXT, quantidade integer, tipo_corte TEXT, valor TEXT, cliente TEXT, rota TEXT, enviados integer, usuario_id integer)']
+      ['CREATE TABLE IF NOT EXISTS produto (id integer primary key AUTOINCREMENT NOT NULL, peso_inicial TEXT, peso_final TEXT, quantidade integer, tipo_corte TEXT, valor TEXT, cliente TEXT, rota TEXT, enviados integer, usuario_id integer)']
     ])
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));
