@@ -1,8 +1,12 @@
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http ,Response ,Headers, RequestOptions} from '@angular/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-http-service',
@@ -11,7 +15,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class HttpServicePage implements OnInit {
   private handleError;
-  private url: string = 'https://www.ftc.br/slimapi/public/api';
+  private url: string = 'https://www.ftc.br/api-prototipo/public/api';
   constructor(public http: Http) {
     console.log('Hello HttpServiceProvider Provider');
   }

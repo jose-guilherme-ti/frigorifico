@@ -105,12 +105,18 @@ export class HomePage {
 
             //Carrega load
             this.loadingController.create({
-              message: "Enviando dados para seu Dash..."
-            }).then((load) => load.present());
+              message: "Enviando dados para seu Dash...",
+              duration: 2000
+            }).then((load) => {
+              load.present();
+              load.onDidDismiss().then((dis) => {
+                console.log('Loading dismissed! after 2 Seconds');
+              });
+            });
             //
             //Envia todos com contatos que estão com status enviados como 0,
             // para banco de dados via api REST
-            this.http.save('customers/enviar', resultado)
+            this.http.save('produtos/adicionar-todos', resultado)
               .subscribe(data => {
                 this.toast.create({
                   message: data.msg,
@@ -123,6 +129,7 @@ export class HomePage {
               console.log(ativo.id);
               this.conexao.update_enviar(ativo.id);
             }
+
           });
 
       } else {

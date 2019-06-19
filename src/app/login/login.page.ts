@@ -97,7 +97,7 @@ export class LoginPage implements OnInit {
     
     let data;
     this.conexao.loginLocal(this.loginForm)
-      .then((res :any[]) => {
+      .then((res :any[]) =>{
         console.log('Usuario logado: ', res);
         res.forEach((d) =>{
           data = {

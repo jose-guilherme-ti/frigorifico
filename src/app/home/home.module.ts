@@ -11,6 +11,7 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
+   
     RouterModule.forChild([
       {
         path: '',
