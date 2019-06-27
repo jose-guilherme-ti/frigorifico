@@ -6,6 +6,7 @@ import { ConexaoService, Produto } from '../service/conexao/conexao.service';
 import { ToastController, AlertController, Platform, LoadingController } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { HttpServicePage } from '../service/http-service/http-service.page';
+import { ProdutosServiceFB, ProdutoFB} from '../service/conexaoFB/conexao-fb.service';
 
 
 declare var navigator: any;
@@ -27,6 +28,17 @@ export class HomePage {
   onlyInactives: boolean = false;
   searchText: string = null;
   id_usuario: string;
+  produtoFB: ProdutoFB = {
+    id: '',
+    peso_inicial: '',
+    peso_final: '',
+    quantidade: 0,
+    tipo_corte: '',
+    valor: '',
+    cliente: '',
+    rota: '',
+    usuario_id: ''
+  };
   constructor(
     public storage: Storage,
     private authservice: AuthService,
@@ -37,6 +49,7 @@ export class HomePage {
     public platform: Platform,
     public loadingController: LoadingController,
     public http: HttpServicePage,
+    private produtoService: ProdutosServiceFB,
   ) { }
 
   ionViewWillEnter() {
@@ -102,7 +115,21 @@ export class HomePage {
         this.conexao.getAll(this.id_usuario, this.searchText, false)
           .then((resultado: any[]) => {
             //this.consultor = result;
-
+            resultado.forEach(r => {
+              this.produtoFB.cliente = r.cliente;
+              this.produtoFB.peso_final = "";
+              this.produtoFB.peso_inicial = r.peso_inicial;
+              this.produtoFB.quantidade = r.quantidade;
+              this.produtoFB.rota = r.rota;
+              this.produtoFB.tipo_corte = r.tipo_corte;
+              this.produtoFB.usuario_id = r.usuario_id;
+              this.produtoFB.valor = r.valor;
+              this.produtoService.addProduto(this.produtoFB).then(resp => {
+                console.log(resp);
+              }).catch(error => {
+                console.log(error);
+              });
+            });
             //Carrega load
             this.loadingController.create({
               message: "Enviando dados para seu Dash...",

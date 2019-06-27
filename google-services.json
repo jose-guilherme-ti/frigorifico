@@ -1,0 +1,40 @@
+{
+    "project_info": {
+      "project_number": "91376993387",
+      "firebase_url": "https://ionic-notificacao.firebaseio.com",
+      "project_id": "ionic-notificacao",
+      "storage_bucket": "ionic-notificacao.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:91376993387:android:a83db020c3afb5f4",
+          "android_client_info": {
+            "package_name": "br.com.frigorifico"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "91376993387-9inpmvjfqbdqig7i2ptth5av5l1vj3d1.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAeZCJGpHXCmvOd7U8MZEt_8UHc9GjTTvM"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "91376993387-9inpmvjfqbdqig7i2ptth5av5l1vj3d1.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

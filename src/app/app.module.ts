@@ -80,6 +80,19 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { Firebase } from '@ionic-native/firebase/ngx';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgFRmaL0uVpVWqxGeMHBnYl-oOpIIuvv8",
+  authDomain: "ionic-notificacao.firebaseapp.com",
+  databaseURL: "https://ionic-notificacao.firebaseio.com",
+  projectId: "ionic-notificacao",
+  storageBucket: "ionic-notificacao.appspot.com",
+  messagingSenderId: "91376993387",
+  appId: "1:91376993387:web:56a64ca63b56f58f"
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -91,6 +104,8 @@ import { HttpModule } from '@angular/http';
     BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
     IonicStorageModule.forRoot({
       name: '__mydb',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -103,6 +118,7 @@ import { HttpModule } from '@angular/http';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
     Network,
+    Firebase
 
   ],
   bootstrap: [AppComponent]

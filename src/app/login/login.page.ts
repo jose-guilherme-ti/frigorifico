@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../service/auth/auth.service';
 import { ConexaoService, Login } from '../service/conexao/conexao.service';
 import { Router } from '@angular/router';
+import { ProdutoFB, ProdutosServiceFB } from '../service/conexaoFB/conexao-fb.service';
+import { NotificacaoService } from '../service/notificacao/notificacao.service';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
@@ -50,12 +54,12 @@ export class LoginPage implements OnInit {
 
   login = true;
   register = false;
-  loginForm : Login = {
+  loginForm: Login = {
     email: '',
     senha: ''
   };
 
-  
+
 
 
   registroForm = {
@@ -63,19 +67,62 @@ export class LoginPage implements OnInit {
     senha: '',
     nome: ''
   }
-
+  produtosFB: ProdutoFB[];
+  public notifications: any;
+  public isSubscribed: boolean;
+  private TOPIC_NAME = 'homeTopic';
 
   constructor(
     public navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private storage: Storage,
     private authservice: AuthService,
-    private conexao:ConexaoService,
-    private router: Router
+    private conexao: ConexaoService,
+    private router: Router,
+    private produtoService: ProdutosServiceFB,
+    private notificationsService: NotificacaoService,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
+    this.produtoService.getProdutos().subscribe(res => {
+      this.produtosFB = res;
+      console.log(this.produtosFB);
+    });
   }
+
+
+  ionViewDidEnter() {
+    this.notifications = this.notificationsService.onNotifications().subscribe(
+      (msg) => {
+        this.presentToast(msg.body);
+      });
+  }
+
+  ionViewDidLeave() {
+    this.notifications.unsubscribe();
+  }
+
+  public handleSubscription(subscribed) {
+    if (subscribed) {
+      this.notificationsService.topicSubscription(this.TOPIC_NAME);
+    } else {
+      this.notificationsService.topicUnsubscription(this.TOPIC_NAME);
+    }
+  }
+
+  private async presentToast(message) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
+
+
+
 
 
   //Exibir form de registro
@@ -94,12 +141,12 @@ export class LoginPage implements OnInit {
 
   //Login
   fazerLogin() {
-    
+
     let data;
     this.conexao.loginLocal(this.loginForm)
-      .then((res :any[]) =>{
+      .then((res: any[]) => {
         console.log('Usuario logado: ', res);
-        res.forEach((d) =>{
+        res.forEach((d) => {
           data = {
             nome: d.nome,
             email: d.email,
@@ -108,19 +155,19 @@ export class LoginPage implements OnInit {
         })
         this.storage.set('usuario', data)
           .then(() => {
-           // presentLoading();
+            // presentLoading();
             this.router.navigate(['HomePage'])
           })
 
       })
       .catch((err) => {
-       
+
       })
   }
 
   //Registro
   criarNovaConta() {
-   
+
     this.authservice.registrar(this.registroForm)
       .then((res) => {
         //Organizar dados
@@ -133,13 +180,13 @@ export class LoginPage implements OnInit {
             //presentLoading();
             this.router.navigate(['HomePage'])
           })*/
-          this.exibirLogin(); 
+        this.exibirLogin();
       })
       .catch((err) => {
       })
 
   }
-  
+
 
 }
 async function presentLoading() {
